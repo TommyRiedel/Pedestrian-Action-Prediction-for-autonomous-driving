@@ -13,9 +13,25 @@ Increasing vehicle automation is seen as a potential solution to reduce accident
 Autonomous vehicles rely on sensors like cameras, LiDAR, and radar to perceive their surroundings, enabling the prediction of road users' future behaviour for early response and accident prevention.
 This thesis, conducted at the Chair of Automotive Technology (TUM), focuses on developing a model to predict the crossing behaviour of pedestrians, especially crucial given their high representation among VRUs and vulnerability during road crossing.
 A potential first application could be in the research project ["EDGAR"](https://www.mos.ed.tum.de/ftm/forschungsfelder/team-av-perception/edgar/), in which an attempt is being made to create a fully autonomous Wiesn shuttle.
+A data-driven approach is used, as no prior information about the traffic situation will be required and the algorithm may potentially be successfully applied to complex unseen traffic scenarios.
 
-## Data + Preprocessing:
-la
+## Data and Preprocessing:
+
+This study utilizes the naturalistic datasets [JAAD_{beh}]() and [PIE](), both created by the same research group and exhibiting relative similarity. 
+A notable contrast lies in the duration of recordings; JAAD comprises 5-15 second clips, while PIE consists of a continuous ten-hour recording captured on a sunny day in Toronto. 
+JAAD recordings span various locations, times of day, seasons, and weather conditions across Europe and North America.
+Annotation distinctions are minimal, with PIE uniquely providing precise ego-vehicle velocities. 
+JAAD leans towards an imbalance with a focus on crossing samples, while PIE has a higher proportion of non-crossing samples.
+
+
+
+Additionally the creators of the datasets have implemented a [benchmark]() approach to enhance the comparability of models.
+In this context, the observation length is set at 16 frames, equivalent to about 0.5 seconds of video, while the crossing event is projected to occur 30-60 frames (1-2 seconds) into the future (time-to-event).
+
+
+
+## Model:
+lala
 
 ## Results:
 la
