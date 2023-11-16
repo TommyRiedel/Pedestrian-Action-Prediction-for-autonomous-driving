@@ -17,7 +17,7 @@ A data-driven approach is used, as no prior information about the traffic situat
 
 ## Data and Preprocessing:
 
-This study utilizes the naturalistic datasets [JAAD_{beh}]() and [PIE](), both created by the same research group and exhibiting relative similarity. 
+This study utilizes the naturalistic datasets [JAAD_{beh}](https://data.nvision2.eecs.yorku.ca/JAAD_dataset/) and [PIE](https://data.nvision2.eecs.yorku.ca/PIE_dataset/), both created by the same research group and exhibiting relative similarity. 
 A notable contrast lies in the duration of recordings; JAAD comprises 5-15 second clips, while PIE consists of a continuous ten-hour recording captured on a sunny day in Toronto. 
 JAAD recordings span various locations, times of day, seasons, and weather conditions across Europe and North America.
 Annotation distinctions are minimal, with PIE uniquely providing precise ego-vehicle velocities. 
@@ -25,7 +25,7 @@ JAAD leans towards an imbalance with a focus on crossing samples, while PIE has 
 
 
 
-Additionally the creators of the datasets have implemented a [benchmark]() approach to enhance the comparability of models.
+Additionally the creators of the datasets have implemented a [benchmark](https://github.com/ykotseruba/PedestrianActionBenchmark) approach to enhance the comparability of models.
 In this context, the observation length is set at 16 frames, equivalent to about 0.5 seconds of video, while the crossing event is projected to occur 30-60 frames (1-2 seconds) into the future (time-to-event).
 
 
