@@ -36,7 +36,7 @@ This velocity information is obtained through an On-Board Diagnostics (OBD) sens
 #### Pose Keypoint location:
 The depicted human body representation relies on a simplified model consisting of 17 keypoints corresponding to major human joints (refer to the image)
 However, this information is not inherent in either of the two datasets and needs to be initially estimated through a human pose estimation algorithm.
-In this study, [HRNet]() is selected because of its high accuracy in keypoint estimation.
+In this study, [HRNet](https://github.com/leoxiaobin/deep-high-resolution-net.pytorch) is selected because of its high accuracy in keypoint estimation.
 The smaller variant of the network, W-32, is chosen to optimize runtime.
 The algorithm is applied to the region defined by the bounding box, which is scaled to dimensions of 256x192 pixels.
 This process aims to estimate the locations of the 17 keypoints, providing a crucial foundation for subsequent analyses involving human body pose information in the datasets.
