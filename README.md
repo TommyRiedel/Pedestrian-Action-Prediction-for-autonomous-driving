@@ -127,3 +127,4 @@ However, it's crucial for Level 5 vehicles to handle diverse conditions, necessi
 The combined data set does not show particularly good results either, as can be seen from the cross-evaluation.
 For the JAAD data the model trained on the combined dataset tends to favour crossing, while non-crossing is overestimated for PIE data.
 This aligns with the overrepresented class in each dataset, indicating a tendency to underestimate the underrepresented class relatively strongly.
+PIE shows relatively good generalizability to the JAAD dataset.
