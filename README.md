@@ -41,7 +41,9 @@ The smaller variant of the network, W-32, is chosen to optimize runtime.
 The algorithm is applied to the region defined by the bounding box, which is scaled to dimensions of 256x192 pixels.
 This process aims to estimate the locations of the 17 keypoints, providing a crucial foundation for subsequent analyses involving human body pose information in the datasets.
 
-<img src="https://github.com/TommyRiedel/Pedestrian-Action-Prediction-for-autonomous-driving/assets/33426324/3010816a-2a81-40e4-95ab-2e52ac5a40f4" width="300">
+<p align="center">
+<img src="https://github.com/TommyRiedel/Pedestrian-Action-Prediction-for-autonomous-driving/assets/33426324/3010816a-2a81-40e4-95ab-2e52ac5a40f4" width="450">
+</p>
 
 $ P_{j} = {p_{j}^{t-m+1}, p_{j}^{t-m+2}, ..., p_{j}^{t}} $
 
