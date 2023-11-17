@@ -25,14 +25,19 @@ JAAD leans towards an imbalance with a focus on crossing samples, while PIE has 
 Additionally, the creators of the datasets have implemented a [benchmark](https://github.com/ykotseruba/PedestrianActionBenchmark) approach to enhance the comparability of models.
 In this context, the observation length is set at 16 frames, equivalent to about 0.5 seconds of video, while the crossing event is projected to occur 30-60 frames (1-2 seconds) into the future (time-to-event).
 
-JAAD      			|  NC				|  C				| $\sum$
+JAAD      			|  NC				|  C				| $\sum$			|  PIE     			|  NC				|  C				| $\sum$
+-------------------------	| -------------------------	| -------------------------	| -------------------------	| -------------------------	| -------------------------	| -------------------------	| -------------------------
+Train				|  400 (17.2\%)		| 1926 (82.8\%)		| 2326 (85.1\%)		|				| 3635 (74.1\%)		| 1272 (25.9\%)		| 4907 (73.6\%)
+Validation			|  12 (26.7\%)		| 33 (73.3\%)		| 45 (1.6\%)		|				| 358 (79.0\%)		| 95 (21.0\%)		| 453 (6.8\%)
+Train				|  133 (17.2\%)		| 230 (82.8\%)		| 363 (13.3\%)		|				| 940 (72.0\%)		| 366 (28.0\%)		| 1306 (19.6\%)
+$\sum$			|  545 (19.9\%)		| 2189 (80.1\%)		| 2734			|				| 4933 (74.0\%)		| 1733 (26.0\%)		| 6666
+
+PIE     			|  NC				|  C				| $\sum$
 -------------------------	| -------------------------	| -------------------------	| -------------------------
-Train				|  400 (17.2\%)		| 1926 (82.8\%)		| 2326 (85.1\%)
-Validation			|  12 (26.7\%)		| 33 (73.3\%)		| 45 (1.6\%)
-Train				|  133 (17.2\%)		| 230 (82.8\%)		| 363 (13.3\%)
-$\sum$			|  545 (19.9\%)		| 2189 (80.1\%)		| 2734
-
-
+Train				|  3635 (74.1\%)	| 1272 (25.9\%)		| 4907 (73.6\%)
+Validation			|  358 (79.0\%)		| 95 (21.0\%)		| 453 (6.8\%)
+Train				|  940 (72.0\%)		| 366 (28.0\%)		| 1306 (19.6\%)
+$\sum$			|  4933 (74.0\%)	| 1733 (26.0\%)		| 6666
 
 
 
