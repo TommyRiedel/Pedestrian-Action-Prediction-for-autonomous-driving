@@ -20,23 +20,48 @@ This study utilizes the naturalistic datasets [JAAD_{beh}](https://data.nvision2
 A notable contrast lies in the duration of recordings; JAAD comprises 5-15 second clips, while PIE consists of a continuous ten-hour recording captured on a sunny day in Toronto. 
 JAAD recordings span various locations, times of day, seasons, and weather conditions across Europe and North America.
 Annotation distinctions are minimal, with PIE uniquely providing precise ego-vehicle velocities. 
-JAAD leans towards an imbalance with a focus on crossing samples, while PIE has a higher proportion of non-crossing samples.
+
+### Features:
+#### Bounding Box location:
+The bounding box is defined by two coordinates, representing the upper left and lower right corners: $b_{j} = [(x_{j}^{1}, y_{j}^{1}), (x_{j}^{2}, y_{j}^{2})]$.
+This bounding box serves a dual purpose: it records the historical movement trajectory of the pedestrian and indicates their relative position within the image.
+Consequently, when the bounding box is larger and more centrally located, it signifies that the pedestrian is closer to the ego vehicle
+
+$ B_{j} = {b_{j}^{t-m+1}, b_{j}^{t-m+2}, ..., b_{j}^{t}} $
+
+#### Ego-Vehicle velocity:
+The velocity of the ego vehicle is exclusively recorded for the PIE dataset, where it is measured in kilometers per hour per frame. 
+This velocity information is obtained through an On-Board Diagnostics (OBD) sensor, providing a comprehensive understanding of the ego vehicle's speed dynamics on a per-frame basis within the PIE dataset.
+
+#### Pose Keypoint location:
+The depicted human body representation relies on a simplified model consisting of 17 keypoints corresponding to major human joints (refer to the image)
+However, this information is not inherent in either of the two datasets and needs to be initially estimated through a human pose estimation algorithm.
+In this study, [HRNet]() is selected because of its high accuracy in keypoint estimation.
+The smaller variant of the network, W-32, is chosen to optimize runtime.
+The algorithm is applied to the region defined by the bounding box, which is scaled to dimensions of 256x192 pixels.
+This process aims to estimate the locations of the 17 keypoints, providing a crucial foundation for subsequent analyses involving human body pose information in the datasets.
+
+BILD
+
+$ P_{j} = {p_{j}^{t-m+1}, p_{j}^{t-m+2}, ..., p_{j}^{t}} $
 
 Additionally, the creators of the datasets have implemented a [benchmark](https://github.com/ykotseruba/PedestrianActionBenchmark) approach to enhance the comparability of models.
 In this context, the observation length is set to $m=16$ frames, equivalent to about 0.5 seconds of video, while the crossing event is projected to occur $t = [30, 60]$ frames (1-2 seconds) into the future (time-to-event).
 
-Um mehr Trainingsdaten zur Verfügung zu haben wird ein Overlap von 60\% für PIE bzw. 80\% für JAAD zwischen den Sequenzen verwendet.
-Daraus folgt, dass aus einer Szene 6 bzw. 11 Sequenzen und damit Daten erzeugt werden.
+To augment the training dataset, an overlap strategy is implemented. 
+Specifically, a 60\% overlap for the PIE dataset and an 80\% overlap for JAAD are employed between sequences. 
+This results in the generation of 6 sequences for PIE and 11 sequences for JAAD from a single scene. 
+The utilization of this overlap approach contributes to an increased volume of training data, enhancing the model's ability to generalize and improve performance.
+Furthermore, slight variations are applied to the coordinates of both the bounding box and pose keypoints.
+The x-coordinates undergo variations within the range of [0, 8], while the y-coordinates vary within [0, 6].
+Subsequently, these coordinates are normalized to values within the range of [0, 1], leveraging the image dimensions of height = 1920 pixels and width = 1080 pixels.
+This normalization enhances numerical stability in the algorithm and facilitates faster convergence.
 
-Um die Robustheit des Algorithmus zu erhöhen werden die Koordinaten von Bounding Box und pose keypoints leicht variiert (Augmentation).
-Die x-Koordinaten werden um [0, 8] und die x-Koordinaten um [0, 6] variiert.
-Außerdem werden die Koordinaten im Anschluss mit Hilfe der height = 1920 pixel und width = 1080 pixel auf Werte [0, 1] normalisiert.
-This improves the numerical stability of the algorithm and leads to faster convergence.
-
-Die Aufteilung der Daten in Trainings, Validierung und Test wird in der benchmark ebenfalls vorgegeben.
-Die nachfolgenden Tabellen zeigen die Anzahl der Daten in den jeweiligen subsets.
-COMB stellt dabei einen aus JAAD und PIE kombinierten Datensatz dar, der ebenfalls untersucht wird.
-Es ist zu erkennen, dass PIE deutlich mehr Daten beinhaltet (2,5 mal so viele).
+The distribution of data into training, validation, and testing sets is explicitly outlined in the benchmark.
+The following tables present the number of data points within each respective subset. 
+The COMB dataset represents a combined dataset from JAAD and PIE, and it is also subjected to analysis.
+JAAD exhibits an imbalance, primarily focusing on crossing samples, whereas PIE has a higher proportion of non-crossing samples. 
+Notably, PIE contains a significantly larger amount of data, approximately 2.5 times more than JAAD.
 
 JAAD      			|  NC				|  C				| $\sum$			
 -------------------------	| -------------------------	| -------------------------	| -------------------------	
@@ -58,28 +83,6 @@ Train				|  4035 (55.8\%)	| 3198 (44.2\%)		| 7233 (76.9\%)
 Validation			|  370 (74.3\%)		| 128 (25.7\%)		| 498 (5.3\%)
 Train				|  1073 (64.3\%)	| 596 (35.7\%)		| 1669 (17.8\%)
 $\sum$			|  5478 (58.3\%)	| 3922 (41.7\%)		| 9400
-
-## Features:
-### Bounding Box location:
-Die Bounding Box eines Fußgängers wird mit 2 Koordinaten, der linken oberen und der rechten unteren angegeben: $b_{j} = [(x_{j}^{1}, y_{j}^{1}), (x_{j}^{2}, y_{j}^{2})]$.
-In ihr sind zum einen die vergangene Bewegungstrajektorie des Fußgängers sowie die relative Position des Fußgängers im Bild gespeichert.
-Demnach befindet sich der Fußgänger näher am ego Fahrzeug wenn die Bounding Box größer und zentraler im Bild ist.
-
-$ B_{j} = {b_{j}^{t-m+1}, b_{j}^{t-m+2}, ..., b_{j}^{t}} $
-
-#### Ego-Vehicle velocity:
-Die ego vehicle velocity ist nur für den PIE Datensatz gespeichert, dort wurde sie mittels OBD sensor in km/h per frame gemessen.
-
-### Pose Keypoint location:
-Dabei handelt es sich um eine vereinfachte Darstellung des menschlichen Körpers anhand 17 keypoints, die den major human joints entsprechen (siehe Bild).
-Diese Information ist in keinem der beiden Datensätze gespeichert und muss daher zunächst mit Hilfe eines human pose estimation algorithmus geschätzt werden.
-Hierfür wird in dieser Arbeit [HRNet]() verwendet, da dieses mit die genausten Schätzungen für die keypoints liefert.
-Aufgrund der geringeren Laufzeit wird die kleine Variante des Netzwerks (W-32) verwendet.
-Der Algorithmus wird auf den Ausschnitt der Bounding Box angewandt wobei dieser auf 256x192 pixel skalliert wird.
-
-BILD
-
-$ P_{j} = {p_{j}^{t-m+1}, p_{j}^{t-m+2}, ..., p_{j}^{t}} $
 
 ## Model:
 
