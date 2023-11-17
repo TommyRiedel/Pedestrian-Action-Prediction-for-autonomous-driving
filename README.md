@@ -6,7 +6,6 @@
  - Tensorhub
  
 ## Motivation:
-
 Pedestrians, categorized as Vulnerable Road Users (VRUs), contribute significantly to road accident fatalities, with over 90\% of incidents attributed to human error ([WHO](https://www.who.int/health-topics/road-safety#tab=tab_1)).
 Increasing vehicle automation is seen as a potential solution to reduce accidents.
 Autonomous vehicles rely on sensors like cameras, LiDAR, and radar to perceive their surroundings, enabling the prediction of road users' future behaviour for early response and accident prevention.
@@ -15,7 +14,7 @@ A potential first application could be in the research project ["EDGAR"](https:/
 A data-driven approach is used, as no prior information about the traffic situation will be required and the algorithm may potentially be successfully applied to complex unseen traffic scenarios.
 
 ## Data and Preprocessing:
-
+This is a binary classification problem $j = {0, 1}$, where crossing (C) is usually regarded as 1 and non-crossing (NC) as 0.
 This study utilizes the naturalistic datasets [JAAD_{beh}](https://data.nvision2.eecs.yorku.ca/JAAD_dataset/) and [PIE](https://data.nvision2.eecs.yorku.ca/PIE_dataset/), both created by the same research group and exhibiting relative similarity. 
 A notable contrast lies in the duration of recordings; JAAD comprises 5-15 second clips, while PIE consists of a continuous ten-hour recording captured on a sunny day in Toronto. 
 JAAD recordings span various locations, times of day, seasons, and weather conditions across Europe and North America.
@@ -37,6 +36,12 @@ This velocity information is obtained through an On-Board Diagnostics (OBD) sens
 The depicted human body representation relies on a simplified model consisting of 17 keypoints corresponding to major human joints (refer to the image)
 However, this information is not inherent in either of the two datasets and needs to be initially estimated through a human pose estimation algorithm.
 In this study, [HRNet](https://github.com/leoxiaobin/deep-high-resolution-net.pytorch) is selected because of its high accuracy in keypoint estimation.
+This is a top-down multi-person pose estimation algorithm that follows a sequential process. 
+Initially, individuals are identified through a person detector, and subsequently, their poses are estimated individually. 
+The algorithm maintains a high-resolution representation throughout the entire process, incorporating stepwise high-to-low resolution subnetworks. 
+These multi-resolution subnetworks operate in parallel, facilitating repeated multiscale fusions.
+The parallel connections enable high-to-low-resolution representations to receive information from other concurrent representations.
+The predicted keypoint heatmap is potentially more accurate and spatially precise. 
 The smaller variant of the network, W-32, is chosen to optimize runtime.
 The algorithm is applied to the region defined by the bounding box, which is scaled to dimensions of 256x192 pixels.
 This process aims to estimate the locations of the 17 keypoints, providing a crucial foundation for subsequent analyses involving human body pose information in the datasets.
@@ -88,7 +93,10 @@ $\sum$			|  5478 (58.3\%)	| 3922 (41.7\%)		| 9400
 
 ## Model:
 
-![Netzwerk](https://github.com/TommyRiedel/Pedestrian-Action-Prediction-for-autonomous-driving/assets/33426324/2b01f851-96b7-47f6-85ef-ddf304fa5cbc)
+
+<p align="center">
+<img src="https://github.com/TommyRiedel/Pedestrian-Action-Prediction-for-autonomous-driving/assets/33426324/2b01f851-96b7-47f6-85ef-ddf304fa5cbc">
+</p>
 
 ## Results:
 
