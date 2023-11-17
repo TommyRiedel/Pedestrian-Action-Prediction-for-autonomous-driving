@@ -92,11 +92,38 @@ Train				|  1073 (64.3\%)	| 596 (35.7\%)		| 1669 (17.8\%)
 $\sum$			|  5478 (58.3\%)	| 3922 (41.7\%)		| 9400
 
 ## Model:
-
+The main building block of the network is a Spatio-Temporal Graph Convolutional Network (ST-GCN).
+This block is applied to both the bounding box and the pose keypoint location inputs.
+It comprises a spatial graph convolution, extracting information between spatially neighbouring keypoints within a frame, and a temporal convolution, considering the temporal evolution of a keypoint's position in consecutive frames.
+The keypoint connections within the graph can be trained, initially starting from natural connections as illustrated in the image above. 
+However, these connections can be adapted based on the specific data and the problem at hand, potentially leading to improved connections.
+The ego vehicle velocity is processed using temporal convolution layers. 
+The outputs from the three branches of the network are then combined and weighted using an attention block. 
+This block assigns higher weights to features that contribute more significantly to the classification task. 
+Finally, the classification into the two classes is performed using two consecutive fully connected layers.
+Through experimentation, it was found that employing two ST-GCN blocks yielded the best results.
 
 <p align="center">
 <img src="https://github.com/TommyRiedel/Pedestrian-Action-Prediction-for-autonomous-driving/assets/33426324/2b01f851-96b7-47f6-85ef-ddf304fa5cbc">
 </p>
 
 ## Results:
+#### PIE ablation study:
+Initially, an ablation study was conducted on the PIE dataset to explore the effectiveness of various features or combinations thereof. 
+For approaches "P1-3", three different implementations of the ST-GCN block were examined.
+"V" denotes ego-vehicle velocity and "B" indicates bounding box location.
+The results in the corresponding folder indicate that the ego vehicle velocity has the highest significance on the model's performance.
+However, using ego-vehicle velocity as input raises concerns, as it is also an indirect output of the algorithm and reflects the driver's response (data recorded with human drivers) to pedestrians, a factor absent in fully autonomous vehicles or when the driver fails to recognize pedestrians in critical situations.
+Consequently, contrary to this study and much of the literature, this feature should be excluded.
+The use of 17 keypoints, as opposed to the two points of the bounding box, hardly yields superior results. 
+Therefore, the consideration of pose keypoints with the ST-GCN block seems to offer little added value and warrants further investigation. 
+Additionally, the fusion of features requires revision, as it leads to poorer results despite the additional information.
 
+#### JAAD and COMB Dataset and Cross-evaluation:
+As can be seen from the corresponding folder (results), the results with the PIE data set are significantly better than with JAAD or the combined dataset.
+This enhancement can be attributed, in part, to the larger volume of data within this dataset. 
+Another contributing factor may be the more consistent environmental conditions in PIE. 
+However, it's crucial for Level 5 vehicles to handle diverse conditions, necessitating data that includes scenarios like snowy conditions.
+The combined data set does not show particularly good results either, as can be seen from the cross-evaluation.
+For the JAAD data the model trained on the combined dataset tends to favour crossing, while non-crossing is overestimated for PIE data.
+This aligns with the overrepresented class in each dataset, indicating a tendency to underestimate the underrepresented class relatively strongly.
