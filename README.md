@@ -23,11 +23,9 @@ Annotation distinctions are minimal, with PIE uniquely providing precise ego-veh
 JAAD leans towards an imbalance with a focus on crossing samples, while PIE has a higher proportion of non-crossing samples.
 
 JAAD      			|  NC				|  C				| SUMME
--------------------------	|-------------------------	|-------------------------
+-------------------------	| -------------------------	| -------------------------	| -------------------------
 Train				|  400 (17.2\%)		| 1926 (82.8\%)		| 2326 (85.1\%)
-Validation			|  12 (26.7\%)		| 33 (73.3\%)		| 45 (1.6\%)
-Train				|  133 (17.2\%)		| 230 (82.8\%)		| 363 (13.3\%)
-SUMME			|  545 (19.9\%)		| 2189 (80.1\%)		| 2734
+
 
 
 Additionally, the creators of the datasets have implemented a [benchmark](https://github.com/ykotseruba/PedestrianActionBenchmark) approach to enhance the comparability of models.
