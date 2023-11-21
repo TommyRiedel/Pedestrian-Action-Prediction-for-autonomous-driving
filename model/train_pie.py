@@ -1,4 +1,4 @@
-"""
+"""Training the model on pedestrian action prediction on the PIE dataset with Pytorch Lightning (Tensorboard for logging metrics)
 """
 import torch
 from torchvision import transforms as A
